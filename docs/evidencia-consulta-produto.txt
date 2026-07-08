@@ -1,0 +1,627 @@
+SISTEMA DE GESTÃO COMERCIAL (HIBERNATE)
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- VENDAS ---
+1 - Nova venda
+2 - Cancelar venda
+0 - Voltar
+Opção: ID do cliente: Jul 08, 2026 1:03:27 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate ORM core version 6.6.4.Final
+Jul 08, 2026 1:03:27 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+INFO: HHH000026: Second-level cache disabled
+Jul 08, 2026 1:03:27 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using built-in connection pool (not intended for production use)
+Jul 08, 2026 1:03:28 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+WARN: HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+Jul 08, 2026 1:03:28 PM org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator initiateService
+INFO: HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/gestao_comercial?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo]
+	Database driver: com.mysql.cj.jdbc.Driver
+	Database version: 8.4.10
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Minimum pool size: 1
+	Maximum pool size: 20
+Jul 08, 2026 1:03:29 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    select
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone 
+    from
+        cliente c1_0 
+    where
+        c1_0.id=?
+ID do produto (0 para finalizar): Hibernate: 
+    select
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda 
+    from
+        produto p1_0 
+    where
+        p1_0.id=?
+Quantidade: Hibernate: 
+    select
+        e1_0.id,
+        e1_0.localizacao,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        e1_0.quantidade_disponivel,
+        e1_0.quantidade_minima,
+        e1_0.ultima_atualizacao 
+    from
+        estoque e1_0 
+    join
+        produto p1_0 
+            on p1_0.id=e1_0.produto_id 
+    where
+        p1_0.id=?
+Item adicionado. Total parcial: R$ 500.0
+ID do produto (0 para finalizar): Hibernate: 
+    select
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda 
+    from
+        produto p1_0 
+    where
+        p1_0.id=?
+Quantidade: Hibernate: 
+    select
+        e1_0.id,
+        e1_0.localizacao,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        e1_0.quantidade_disponivel,
+        e1_0.quantidade_minima,
+        e1_0.ultima_atualizacao 
+    from
+        estoque e1_0 
+    join
+        produto p1_0 
+            on p1_0.id=e1_0.produto_id 
+    where
+        p1_0.id=?
+Item adicionado. Total parcial: R$ 680.0
+ID do produto (0 para finalizar): Desconto (0 se não houver): Hibernate: 
+    insert 
+    into
+        venda
+        (cliente_id, data_venda, desconto, status, total_bruto, total_liquido) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item_venda
+        (preco_unitario, produto_id, quantidade, subtotal, venda_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item_venda
+        (preco_unitario, produto_id, quantidade, subtotal, venda_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.id,
+        e1_0.localizacao,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        e1_0.quantidade_disponivel,
+        e1_0.quantidade_minima,
+        e1_0.ultima_atualizacao 
+    from
+        estoque e1_0 
+    join
+        produto p1_0 
+            on p1_0.id=e1_0.produto_id 
+    where
+        p1_0.id=?
+Hibernate: 
+    update
+        estoque 
+    set
+        localizacao=?,
+        produto_id=?,
+        quantidade_disponivel=?,
+        quantidade_minima=?,
+        ultima_atualizacao=? 
+    where
+        id=?
+Hibernate: 
+    select
+        e1_0.id,
+        e1_0.localizacao,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        e1_0.quantidade_disponivel,
+        e1_0.quantidade_minima,
+        e1_0.ultima_atualizacao 
+    from
+        estoque e1_0 
+    join
+        produto p1_0 
+            on p1_0.id=e1_0.produto_id 
+    where
+        p1_0.id=?
+Hibernate: 
+    update
+        estoque 
+    set
+        localizacao=?,
+        produto_id=?,
+        quantidade_disponivel=?,
+        quantidade_minima=?,
+        ultima_atualizacao=? 
+    where
+        id=?
+Venda confirmada com ID 1 | Total líquido: R$ 680.0
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- VENDAS ---
+1 - Nova venda
+2 - Cancelar venda
+0 - Voltar
+Opção: ID do cliente: Hibernate: 
+    select
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone 
+    from
+        cliente c1_0 
+    where
+        c1_0.id=?
+ID do produto (0 para finalizar): Hibernate: 
+    select
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda 
+    from
+        produto p1_0 
+    where
+        p1_0.id=?
+Quantidade: Hibernate: 
+    select
+        e1_0.id,
+        e1_0.localizacao,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        e1_0.quantidade_disponivel,
+        e1_0.quantidade_minima,
+        e1_0.ultima_atualizacao 
+    from
+        estoque e1_0 
+    join
+        produto p1_0 
+            on p1_0.id=e1_0.produto_id 
+    where
+        p1_0.id=?
+Item adicionado. Total parcial: R$ 250.0
+ID do produto (0 para finalizar): Desconto (0 se não houver): Hibernate: 
+    insert 
+    into
+        venda
+        (cliente_id, data_venda, desconto, status, total_bruto, total_liquido) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        item_venda
+        (preco_unitario, produto_id, quantidade, subtotal, venda_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.id,
+        e1_0.localizacao,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        e1_0.quantidade_disponivel,
+        e1_0.quantidade_minima,
+        e1_0.ultima_atualizacao 
+    from
+        estoque e1_0 
+    join
+        produto p1_0 
+            on p1_0.id=e1_0.produto_id 
+    where
+        p1_0.id=?
+Hibernate: 
+    update
+        estoque 
+    set
+        localizacao=?,
+        produto_id=?,
+        quantidade_disponivel=?,
+        quantidade_minima=?,
+        ultima_atualizacao=? 
+    where
+        id=?
+Venda confirmada com ID 2 | Total líquido: R$ 250.0
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- CONSULTAS ---
+1 - Venda por ID
+2 - Vendas por cliente
+3 - Vendas por produto
+4 - Vendas por status
+5 - Vendas por período
+0 - Voltar
+Opção: ID do produto: Hibernate: 
+    select
+        distinct v1_0.id,
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone,
+        v1_0.data_venda,
+        v1_0.desconto,
+        i1_0.venda_id,
+        i1_0.id,
+        i1_0.preco_unitario,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        i1_0.quantidade,
+        i1_0.subtotal,
+        v1_0.status,
+        v1_0.total_bruto,
+        v1_0.total_liquido 
+    from
+        venda v1_0 
+    left join
+        item_venda i1_0 
+            on v1_0.id=i1_0.venda_id 
+    left join
+        produto p1_0 
+            on p1_0.id=i1_0.produto_id 
+    left join
+        cliente c1_0 
+            on c1_0.id=v1_0.cliente_id 
+    where
+        exists(select
+            1 
+        from
+            item_venda i2_0 
+        where
+            i2_0.produto_id=? 
+            and v1_0.id=i2_0.venda_id) 
+    order by
+        v1_0.data_venda desc
+Venda #2 | Cliente: Bruno Lima | Status: CONFIRMADA | Data: 2026-07-08T13:03:30
+  Teclado Mecanico | Qtd: 1 | Unit: R$ 250.0 | Subtotal: R$ 250.0
+  Total Bruto: R$ 250.0 | Desconto: R$ 0.0 | Total Líquido: R$ 250.0
+------------------------
+Venda #1 | Cliente: Ana Souza | Status: CONFIRMADA | Data: 2026-07-08T13:03:29
+  Mouse Gamer | Qtd: 1 | Unit: R$ 180.0 | Subtotal: R$ 180.0
+  Teclado Mecanico | Qtd: 2 | Unit: R$ 250.0 | Subtotal: R$ 500.0
+  Total Bruto: R$ 680.0 | Desconto: R$ 0.0 | Total Líquido: R$ 680.0
+------------------------
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- CONSULTAS ---
+1 - Venda por ID
+2 - Vendas por cliente
+3 - Vendas por produto
+4 - Vendas por status
+5 - Vendas por período
+0 - Voltar
+Opção: ID do produto: Hibernate: 
+    select
+        distinct v1_0.id,
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone,
+        v1_0.data_venda,
+        v1_0.desconto,
+        i1_0.venda_id,
+        i1_0.id,
+        i1_0.preco_unitario,
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda,
+        i1_0.quantidade,
+        i1_0.subtotal,
+        v1_0.status,
+        v1_0.total_bruto,
+        v1_0.total_liquido 
+    from
+        venda v1_0 
+    left join
+        item_venda i1_0 
+            on v1_0.id=i1_0.venda_id 
+    left join
+        produto p1_0 
+            on p1_0.id=i1_0.produto_id 
+    left join
+        cliente c1_0 
+            on c1_0.id=v1_0.cliente_id 
+    where
+        exists(select
+            1 
+        from
+            item_venda i2_0 
+        where
+            i2_0.produto_id=? 
+            and v1_0.id=i2_0.venda_id) 
+    order by
+        v1_0.data_venda desc
+Nenhuma venda encontrada.
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- CLIENTES ---
+1 - Cadastrar
+2 - Listar todos
+3 - Listar ativos
+4 - Inativar
+5 - Ativar
+0 - Voltar
+Opção: ID do cliente: Hibernate: 
+    select
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone 
+    from
+        cliente c1_0 
+    where
+        c1_0.id=?
+Hibernate: 
+    select
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone 
+    from
+        cliente c1_0 
+    where
+        c1_0.id=?
+Hibernate: 
+    update
+        cliente 
+    set
+        ativo=?,
+        cpf=?,
+        data_cadastro=?,
+        email=?,
+        nome=?,
+        telefone=? 
+    where
+        id=?
+Cliente inativado.
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- VENDAS ---
+1 - Nova venda
+2 - Cancelar venda
+0 - Voltar
+Opção: ID do cliente: Hibernate: 
+    select
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone 
+    from
+        cliente c1_0 
+    where
+        c1_0.id=?
+Erro: Cliente inativo não pode realizar compras.
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- PRODUTOS ---
+1 - Cadastrar
+2 - Listar todos
+3 - Listar ativos
+4 - Inativar
+5 - Ativar
+0 - Voltar
+Opção: ID do produto: Hibernate: 
+    select
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda 
+    from
+        produto p1_0 
+    where
+        p1_0.id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda 
+    from
+        produto p1_0 
+    where
+        p1_0.id=?
+Hibernate: 
+    update
+        produto 
+    set
+        ativo=?,
+        categoria=?,
+        descricao=?,
+        nome=?,
+        preco_custo=?,
+        preco_venda=? 
+    where
+        id=?
+Produto inativado.
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: --- VENDAS ---
+1 - Nova venda
+2 - Cancelar venda
+0 - Voltar
+Opção: ID do cliente: Hibernate: 
+    select
+        c1_0.id,
+        c1_0.ativo,
+        c1_0.cpf,
+        c1_0.data_cadastro,
+        c1_0.email,
+        c1_0.nome,
+        c1_0.telefone 
+    from
+        cliente c1_0 
+    where
+        c1_0.id=?
+ID do produto (0 para finalizar): Hibernate: 
+    select
+        p1_0.id,
+        p1_0.ativo,
+        p1_0.categoria,
+        p1_0.descricao,
+        p1_0.nome,
+        p1_0.preco_custo,
+        p1_0.preco_venda 
+    from
+        produto p1_0 
+    where
+        p1_0.id=?
+Quantidade: Erro: Produto inativo não pode ser vendido.
+ID do produto (0 para finalizar): Venda sem itens, operação cancelada.
+
+=== MENU PRINCIPAL ===
+1 - Clientes
+2 - Produtos
+3 - Estoque
+4 - Vendas
+5 - Consultas
+0 - Sair
+Opção: Encerrando.

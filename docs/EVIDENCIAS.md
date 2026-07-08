@@ -42,3 +42,30 @@ Confirmação e cancelamento rodam em uma transação Hibernate única
 (`TransactionManager.executar` → `session.beginTransaction()` + `commit`/`rollback`).
 Teste de rollback (vender além do estoque): a operação falha e o estoque permanece
 inalterado.
+
+## Consulta por produto e regras de inativação
+
+Execução real adicional (base recriada com o seed) cobrindo a consulta de vendas por
+produto e as regras de cliente/produto inativo. Saída completa (com o SQL gerado) em
+[`evidencia-consulta-produto.txt`](evidencia-consulta-produto.txt).
+
+| Fluxo | Resultado |
+|-------|-----------|
+| Duas vendas confirmadas | #1 (Ana: Teclado×2 + Mouse×1 = R$ 680) e #2 (Bruno: Teclado×1 = R$ 250) |
+| **Consulta por produto** (Teclado, ID 1) | retorna **as vendas #1 e #2** (ambas contêm o produto) |
+| **Consulta por produto** (Monitor, ID 3) | `Nenhuma venda encontrada.` (não vendido) |
+| Regra: cliente inativo | após inativar o cliente, nova venda → `Erro: Cliente inativo não pode realizar compras.` |
+| Regra: produto inativo | após inativar o produto, adicioná-lo → `Erro: Produto inativo não pode ser vendido.` |
+
+A consulta usa HQL com subconsulta `exists`, preservando o `join fetch` completo dos itens
+(a venda é filtrada, mas todos os seus itens continuam carregados). SQL gerado pelo ORM:
+
+```sql
+select distinct v1_0.id, ..., i1_0.*, p1_0.*, c1_0.*
+from venda v1_0
+left join item_venda i1_0 on v1_0.id=i1_0.venda_id
+left join produto p1_0 on p1_0.id=i1_0.produto_id
+left join cliente c1_0 on c1_0.id=v1_0.cliente_id
+where exists (select 1 from item_venda i2_0 where i2_0.produto_id=? and v1_0.id=i2_0.venda_id)
+order by v1_0.data_venda desc
+```
