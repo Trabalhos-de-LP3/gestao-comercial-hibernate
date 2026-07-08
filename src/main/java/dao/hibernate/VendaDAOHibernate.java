@@ -54,6 +54,22 @@ public class VendaDAOHibernate implements VendaDAO {
     }
 
     @Override
+    public List<Venda> listarPorProduto(int produtoId) {
+        Session sessao = TransactionManager.getSession();
+        try {
+            return sessao.createQuery(
+                            SELECT_COMPLETO
+                                    + "where exists (select 1 from v.itens it where it.produto.id = :produtoId) "
+                                    + "order by v.dataVenda desc",
+                            Venda.class)
+                    .setParameter("produtoId", produtoId)
+                    .list();
+        } finally {
+            TransactionManager.liberar(sessao);
+        }
+    }
+
+    @Override
     public List<Venda> listarPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
         Session sessao = TransactionManager.getSession();
         try {
